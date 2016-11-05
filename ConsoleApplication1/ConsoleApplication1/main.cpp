@@ -16,9 +16,28 @@ struct node
      void out ();
      node *searc (int);
      void del();
+	 void operator--(int i);
+	  void operator()();
      void addition();
      void cleaning();
  };
+ 
+
+ void Spisok::operator--(int i)  // перегрузка удалить элемент в заданной позиции
+ {
+  node *q;
+  q = (*Res).sled;
+  if  (q!=NULL)
+  {
+    
+    (*Res).sled = (*(*Res).sled).sled; 
+	delete q;
+  }
+  else
+    cout<<"Звено с заданным элементом - последнее!\n";
+}
+ 
+ 
  void Spisok::build ()
  
 {
@@ -81,7 +100,17 @@ void Spisok::del ()
   else
     cout<<"Звено с заданным элементом - последнее!\n";
 }
- 
+
+ void Spisok::operator()()
+ {
+	   node *q;
+  int  el;
+  q = Res;
+  cout<<"Вводите добавляемый элемент : ";
+  cin>>el;
+    (*q).elem = el;
+ }
+/*
 void Spisok::addition ()
  
 {
@@ -93,7 +122,7 @@ void Spisok::addition ()
     (*q).elem = el;
  
 }
- 
+ */
 void Spisok::cleaning()
  
 {
@@ -111,15 +140,14 @@ int main ()
   Spisok A;
   int   el;
   node *Res_Zn;
- 
-  A.build ();
+ A.build ();
   A.out ();
   cout<<"\nВведите элемент звена, после которого осуществляется удаление:\n";
   cin>>el;
   Res_Zn=A.searc (el);
   if  (Res_Zn!=NULL && (*Res_Zn).sled!=NULL)
     {
-		A.del (); 
+		A--; 
 		A.out ();
   }
   else  
@@ -129,8 +157,9 @@ int main ()
   Res_Zn=A.searc (el);
   if  (Res_Zn!=NULL && (*Res_Zn).sled!=NULL)
     {
-		A.addition (); A.out ();
+		A();
+		A.out ();
   }
   else  cout<<"Звена с заданным элементом в списке нет!";
-  A. cleaning();
+
 }
